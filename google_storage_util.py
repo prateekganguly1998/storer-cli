@@ -17,6 +17,5 @@ def create_or_get_bucket():
 
 def store_files(files, blob):
 
-    for file in files:
-        blob.upload_from_filename(file)
-    print(f'Done uploading: {file}')
+    blob.upload_from_filename(files)
+    print(f'Done uploading: {files}')
