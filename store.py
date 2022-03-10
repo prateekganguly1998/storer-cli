@@ -10,7 +10,6 @@ def store(file):
     Provide the relative or absolute path of your file/ folder and the structure will be replicated 
     while uplaoding to the storage account.
     '''
-    # assert os.path.isdir(file)
     bucket = create_or_get_bucket()
     upload_file(file, bucket, "document")
 
