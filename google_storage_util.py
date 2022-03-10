@@ -1,7 +1,9 @@
 # Imports the Google Cloud client library
 from google.cloud import storage
+import os
 # Instantiates a client
 storage_client = storage.Client()
+import glob
 
 # The name for the new bucket
 bucket_name = "custom-storage-cli"
@@ -19,3 +21,12 @@ def store_files(files, blob):
 
     blob.upload_from_filename(files)
     print(f'Done uploading: {files}')
+
+def upload_file(local_path,bucket, gcs_path):
+    for local_file in glob.glob(local_path + '/**'):
+            if not os.path.isfile(local_file):
+                upload_file(local_file,bucket, gcs_path + "/" + os.path.basename(local_file))
+            else:
+                remote_path = os.path.join(gcs_path, local_file[1 + len(local_path):])
+                blob = bucket.blob(remote_path)
+                store_files(files=local_file, blob=blob)
